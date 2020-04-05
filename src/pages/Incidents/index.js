@@ -24,23 +24,14 @@ export default function Incidents() {
       return;
     }
 
-    console.log(`incidents.length = ${incidents.length}`);
-    console.log(`total = ${total}`);
     if (total > 0 && incidents.length == total) {
       return;
     }
 
     setLoading(true);
     const response = await api.get("/incident", {
-      params: { page }
+      params: { page },
     });
-    console.log(`page= ${page}`);
-    console.log(
-      `incidents carregados ant = ${incidents.map(incident => incident.id)}`
-    );
-    console.log(
-      `incidents a carregar = ${response.data.map(incident => incident.id)}`
-    );
 
     setIncidents([...incidents, ...response.data]);
     setTotal(response.headers["x-total-count"]);
@@ -67,7 +58,7 @@ export default function Incidents() {
 
       <FlatList
         data={incidents}
-        keyExtractor={incident => String(incident.id)}
+        keyExtractor={(incident) => String(incident.id)}
         showsVerticalScrollIndicator={false}
         style={styles.incidentList}
         onEndReached={loadIncidents}
@@ -84,7 +75,7 @@ export default function Incidents() {
             <Text style={styles.incidentValue}>
               {Intl.NumberFormat("pt-BR", {
                 style: "currency",
-                currency: "BRL"
+                currency: "BRL",
               }).format(incident.value)}
             </Text>
 
